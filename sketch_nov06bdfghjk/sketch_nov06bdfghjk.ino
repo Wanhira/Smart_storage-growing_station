@@ -1,3 +1,4 @@
+
 #define BLYNK_PRINT Serial
 #include <BlynkSimpleSerialBLE.h>
 
@@ -45,18 +46,14 @@ BLYNK_READ(V2) {
 void setup()
 {
   // Debug console
-  Serial.begin(38400);
+  Serial.begin(9600);
   pinMode(servoPin, OUTPUT);
 
-  SerialBLE.begin(38400);
+  SerialBLE.begin(9600);
   Blynk.begin(SerialBLE, auth);
-
-  Serial.println("Waiting for connections...");
 
   myservo.attach(servoPin);
   dht.begin();
-
-  Serial.println("Waiting for connections...");
 }
 
 void loop()
@@ -64,6 +61,7 @@ void loop()
   while (!Blynk.connected()) {
     delay(500);
     Blynk.connect();
+    digitalWrite(13, LOW);
   }
   Blynk.run();
   timer.run(); // Initiates BlynkTimer
